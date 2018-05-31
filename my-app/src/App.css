@@ -35,6 +35,8 @@
   min-height: 30px;
 }
 
+.row img{width: 100%;}
+
 
 
 @keyframes App-logo-spin {

@@ -25,6 +25,16 @@ function Welcome(props){
 }
 const newElement = <Welcome name="Chris Dunne" age="26" />;
 
+
+const myDiv = (
+  <div>
+    <h1>Hello World!</h1>
+  </div>
+);
+
+////
+
+
 ////
 function myApp(){
   return(
@@ -66,6 +76,25 @@ class App extends Component {
             {/* Clock Thingy */}
           </div>
 
+          <div id="" className="row">
+              {myDiv}
+          </div>
+
+          <div id="renderMe" className="row">
+
+          </div>
+
+          <div id="app-myList" className="row"></div>
+
+         <div id="app-js-in-jsx" className="row"></div>
+         <div id="app-js-math-in-jsx" className="row"></div>
+         <div id="app-math-3" className="row"></div>
+         <div id="app-variable-attributes" className="row"></div>
+         <div id="app-event-listeners" className="row"></div>
+         <div id="app-cointoss" className="row"></div>
+         <div id="app-ampersands" className="row"></div>
+         <div id="app-maps" className="row"></div>
+
         </div>
       </div>
     );
@@ -78,6 +107,22 @@ class Clock extends React.Component {
   constructor(props){
     super(props);
     this.state = {date: new Date()};
+  }
+
+  componentDidMount(){
+    this.timerID = setInterval(
+      () => this.tick(),1000
+    );
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.timerID);
+  }
+
+  tick(){
+    this.setState({
+      date: new Date()
+    });
   }
 
   render() {
