@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
+import {Greeting} from './index.js';
 
 ////
 function formatName(user){
@@ -46,6 +47,39 @@ function myApp(){
   )
 }
 
+//////////////////////////////////////////////////////////////
+//This is actually very important to my understanding of React.
+export class NavBar extends React.Component {
+  render() {
+    const pages = ['home', 'blog', 'pics', 'bio', 'art', 'shop', 'about', 'contact'];
+    const navLinks = pages.map((page, i ) => {
+      return (
+        <a key={'page_' + i} href={'/' + page}>
+          {page}
+        </a>
+      )
+    });
+
+    return <nav>{navLinks}</nav>;
+  }
+}
+
+// Passing Props from one component to another
+// Importing from index.js
+
+export class ImportingProps extends React.Component{
+  render(){
+    return(
+      <div>
+        <h1>Welcome my guest what's his face...</h1>
+        <Greeting name="Chris" />
+        <h1>Welcome to the show....you.</h1>
+      </div>
+    )
+  }
+}
+
+//ReactDOM.render(<RenderProps firstName='Christopher' />, document.getElementById('app-renderprops'));
 
 class App extends Component {
   render() {
@@ -77,7 +111,7 @@ class App extends Component {
           </div>
 
           <div id="" className="row">
-              {myDiv}
+            {myDiv}
           </div>
 
           <div id="renderMe" className="row">
@@ -86,14 +120,27 @@ class App extends Component {
 
           <div id="app-myList" className="row"></div>
 
-         <div id="app-js-in-jsx" className="row"></div>
-         <div id="app-js-math-in-jsx" className="row"></div>
-         <div id="app-math-3" className="row"></div>
-         <div id="app-variable-attributes" className="row"></div>
-         <div id="app-event-listeners" className="row"></div>
-         <div id="app-cointoss" className="row"></div>
-         <div id="app-ampersands" className="row"></div>
-         <div id="app-maps" className="row"></div>
+          <div id="app-js-in-jsx" className="row"></div>
+          <div id="app-js-math-in-jsx" className="row"></div>
+          <div id="app-math-3" className="row"></div>
+          <div id="app-variable-attributes" className="row"></div>
+          <div id="app-event-listeners" className="row"></div>
+          <div id="app-cointoss" className="row"></div>
+          <div id="app-ampersands" className="row"></div>
+          <div id="app-maps" className="row"></div>
+          <div id="app-firstclass" className="row"></div>
+          <div id="app-secondclass" className="row"></div>
+          <div id="app-firstsoloclass" className="row"></div>
+          <div id="app-owl" className="row"></div>
+          <div id="app-friends" className="row"></div>
+          <div id="app-tonightsplan" className="row"></div>
+          <div id="app-usingthis" className="row"></div>
+          <div id="app-button" className="row"></div>
+          <div id="app-componentception" className="row"></div>
+
+          <div id="app-accessprops" className="row"></div>
+          <div id="app-renderprops" className="row"></div>
+          <div id="app-importingprops" className="row"></div>
 
         </div>
       </div>
