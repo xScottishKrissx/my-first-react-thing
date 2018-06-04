@@ -141,6 +141,9 @@ class App extends Component {
           <div id="app-accessprops" className="row"></div>
           <div id="app-renderprops" className="row"></div>
           <div id="app-importingprops" className="row"></div>
+          <div id="app-eventhandlercomponentclass" className="row"></div>         
+          <div id="app-childrenprops" className="row"></div>         
+          <div id="app-defaultprops" className="row"></div>
 
         </div>
       </div>

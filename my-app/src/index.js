@@ -94,6 +94,7 @@ const favoriteFoods = (
     </ul>
   </div>
 );
+
 ReactDOM.render(favoriteFoods, document.getElementById('app-ampersands'));
 
 // .maps
@@ -337,5 +338,92 @@ export class Greeting extends React.Component{
   }
 }
 ReactDOM.render(<ImportingProps />, document.getElementById('app-importingprops'));
+
+
+// Put an event handler in a component class
+class Talker extends React.Component{
+  handleClick(){
+    let speech = '';
+    for(let i = 0; i<10000; i++){
+      speech += 'blah ';
+    }
+    alert(speech);
+  }
+
+  render(){
+    return <Button2 onClick={this.handleClick} />;
+  }
+}
+
+class Button2 extends React.Component{
+  render(){
+    return(
+      <div>
+        <p>Put an Event Handler in a Component Class,</p>
+        <p>Pass an Event Handler as a prop,</p>
+        <p>Receive an Event Handler as a prop</p>
+        <p>handleEvent, onEvent, and this.props.onEvent</p>
+      <button onClick={this.props.onClick}>
+        Click Me!
+      </button>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<Talker />, document.getElementById('app-eventhandlercomponentclass'));
+
+
+
+// this.props.children
+class ChildrenClass extends React.Component{
+  render(){
+    return(
+      <div>
+        <List type="Living Musician">
+          <li>Sachiko M</li>
+          <li>Harvey Sid Fisher</li>
+        </List>
+
+        <List type="Living Cat Musician">
+          <li>Nora the Piano Cat</li>        
+        </List>
+      </div>
+    )
+  }
+}
+
+class List extends React.Component {
+  render() {
+    let titleText = `Favorite ${this.props.type}`;
+    if (this.props.children instanceof Array) {
+    	titleText += 's';
+    }
+    return (
+      <div>
+        <p>this.props.children</p>
+        <h1>{titleText}</h1>
+        <ul>{this.props.children}</ul>
+      </div>
+    );
+  }
+}
+ReactDOM.render(<ChildrenClass />, document.getElementById('app-childrenprops'));
+
+//default props
+class DefaultPropsButton extends React.Component{
+  render(){
+    return(
+      <div>
+        <p>Default Props</p>
+        <button>
+          {this.props.text}
+        </button>
+      </div>
+    );
+  }
+}
+DefaultPropsButton.defaultProps = { text: 'I am a button!'};
+ReactDOM.render(<DefaultPropsButton text="" />, document.getElementById('app-defaultprops'));
+
 
 registerServiceWorker();
