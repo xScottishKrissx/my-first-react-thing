@@ -143,7 +143,19 @@ class App extends Component {
           <div id="app-importingprops" className="row"></div>
           <div id="app-eventhandlercomponentclass" className="row"></div>         
           <div id="app-childrenprops" className="row"></div>         
-          <div id="app-defaultprops" className="row"></div>
+          <div id="app-defaultprops" className="row"></div>                  
+          
+          <div id="app-settingstate" className="row"></div>
+          <div id="app-updatestate" className="row"></div>
+          
+          <div id="app-statefulcomponent" className="row"></div>
+          <div id="app-badclass" className="row">Example of a bad class</div>
+
+          <div id="app-updatingparentcomponentstate" className="row">Example of a bad class</div>
+          <div id="app-updatesiblings" className="row"></div>
+          <div id="app-reactstyling" className="row"></div>
+          <div id="app-reactstyling2" className="row"></div>
+          <div id="app-reactstyling3" className="row"></div>
 
         </div>
       </div>

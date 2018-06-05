@@ -426,4 +426,332 @@ DefaultPropsButton.defaultProps = { text: 'I am a button!'};
 ReactDOM.render(<DefaultPropsButton text="" />, document.getElementById('app-defaultprops'));
 
 
+
+//this.state
+//  setting initial state
+class MyState extends React.Component{
+  constructor(props){
+    super (props);
+    this.state = {title: 'Best App'};
+  }
+
+  render(){
+    return (
+      <div>
+        <p>Setting state, Accessing a components state</p>
+        <h1>{this.state.title}</h1>
+     </div>
+  )
+  }
+}
+ReactDOM.render(<MyState />, document.getElementById('app-settingstate'));
+
+//Update state with this.setstate
+//A component can do more than just read its own state. A component can also change its own state.
+//A component changes its state by calling the function this.setState().
+// whenever you define an event handler that uses this, you need to add 
+//  this.methodName = this.methodName.bind(this) to your constructor function.
+// you can't call this.setState() from inside of the render function! 
+
+//Any time that you call this.setState(), this.setState() AUTOMATICALLY 
+// calls .render() as soon as the state has changed.
+
+//That is why you can't call this.setState() from inside of the .render() method! 
+// this.setState() automatically calls .render(). If .render() calls this.setState(), 
+// then an infinite loop is created.
+
+
+const green = 'green';
+const yellow = 'yellow';
+
+class ToggleColour extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {color: green};
+
+		//this is important and completley arbitrary
+		this.changeColour = this.changeColour.bind(this);
+	}
+
+	changeColour(){
+		//const newColour = yellow;
+		const newColour = this.state.color == yellow ? green : yellow;
+
+		//this.state.color = newColour;
+		this.setState({color: newColour});
+	}
+
+	render(){
+		return (
+			<div style={{background: this.state.color}}>
+				<h1>Updating State</h1>
+				<button onClick={this.changeColour} >Change Colour!</button>
+			</div>
+		)
+	}
+}
+ReactDOM.render(<ToggleColour/>, document.getElementById('app-updatestate'));
+
+// Stateful Components from Stateful Components
+// Building a stateful component class
+class StatefulParentComponent extends React.Component{
+
+	constructor(props){
+		super(props);
+		this.state = {name: "Christopher"};
+	}
+	render(){
+		return (
+		<div>
+			<p>Stateful and Stateless Components, Passing A Component State,</p>
+			<StatelessChildComponent name={this.state.name} />
+		</div>
+		);
+	}
+}
+
+// In the tutorial this is imported from another file, the only difference in code is lack of export
+class StatelessChildComponent extends React.Component{
+	render(){
+		return <h1>Hey, my name is {this.props.name}!</h1>
+	}
+}
+
+ReactDOM.render(<StatefulParentComponent />, document.getElementById('app-statefulcomponent'));
+
+// Don't update props
+//	A component can change its state by calling this.setState();
+//  A component should never update this.props, props and state store dynamic info
+//  Dynamic information can change
+//  A react component should use **props** to store info that can be changes, 
+//   but can only be changed by a different class
+//  A React component should use **state** to store information that the component itself
+//   can change.
+class BadClass extends React.Component{
+	render(){
+		this.props.message = "yo"; // DON'T DO THIS, THIS IS BAD
+		return <h1>{this.props.message}</h1>;
+	}
+}
+//ReactDOM.render(<BadClass />, document.getElementById('app-badclass'));
+
+//Child Components update their parents state
+// Define an Event Handler
+//Stateless components updating their parents' state is a React pattern that you'll see 
+// more and more. Learning to recognize it will help you understand how React apps are 
+//  organized.
+class Child extends React.Component{
+
+	constructor(props){
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(e){
+		const name = e.target.value;
+		this.props.onChange(name);
+	}
+
+	render(){
+		return (
+			<div>
+				<p>Define an event handler, Receive the event handler</p>
+				<h1>My name is {this.props.name} </h1>
+
+				<select id="great-names" onChange={this.handleChange}>
+					<option value="Chris">Chris</option>
+					<option value="Kris">Kris</option>
+					<option value="Smith">Smith</option>
+				</select>
+			</div>
+		);
+	}
+}
+
+class Parent extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {name: 'Chris'};
+		this.changeName = this.changeName.bind(this);
+
+	}
+	changeName(newName){
+		this.setState({
+			name: newName
+		});
+	}
+	render(){
+		return <Child name={this.state.name} onChange={this.changeName} />
+	}
+}
+ReactDOM.render(<Parent/>, document.getElementById('app-updatingparentcomponentstate'));
+
+// One Sibling to display, another to change
+//	Components should only have one job
+// 	Previous code(line 497) has 2
+//	Code should be split up to ensure this
+
+class Parent2 extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {name: 'Chris'};
+		this.changeName = this.changeName.bind(this);
+	}
+	
+	changeName(newName){
+		this.setState({
+			name: newName
+		});
+	}
+
+	render(){
+		return(
+			<div>
+				<Child2 onChange={this.changeName} />
+				<Sibling2 name={this.state.name} />
+			</div>
+		);
+	}
+}
+
+// Child2s job is to offer a way to change the name, NOT display it.
+class Child2 extends React.Component{
+	constructor(props){
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+	handleChange(e){
+		const name = e.target.value;
+		this.props.onChange(name);
+	}
+
+	render(){
+		return(
+			<div>
+				<select id="great-names-2" onChange={this.handleChange}>
+					<option value="Kris">Kris</option>
+					<option value="Smith">Smith</option>
+					<option value="Chris">Chris</option>
+				</select>
+			</div>
+		);
+	}
+}
+
+//Siblings2 job is ONLY to display the selected name, nothing else.
+class Sibling2 extends React.Component{
+	render(){
+		const name = this.props.name;
+		return (
+			<div>
+				<p>Hey, ny name is {name}</p>
+				<p>Don't you thin {name} is the pretties name ever?</p>
+				<p>Sure glad my parents picked {name}</p>
+			</div>
+		);
+	}
+}
+ReactDOM.render(<Parent2 />, document.getElementById('app-updatesiblings'))
+
+
+//Style
+// Advanced React Techniques
+
+//Inline Styles
+const styleMe = <div><p>Inline Styles</p><h1 style={{background:'lightblue', color: 'darkred'}}>Please Style me I am so bland</h1></div>;
+ReactDOM.render(styleMe, document.getElementById('app-reactstyling'));
+
+//Make a Style Object Variable
+const styles = {
+	background: 'lightblue',
+	color: 'darkred',
+	fontSize: 50,
+	marginTop: 100
+}
+const styleMe2 = 
+	<div>
+		<p>Style Object Variable</p>
+		<h1 style={styles}>I am bland</h1>
+	</div>;
+
+
+ReactDOM.render(styleMe2, document.getElementById('app-reactstyling2'));
+
+//React Styling 3
+// Sharing Styles Across Multiple Components
+
+const divStyle = {
+	background: styles.background
+}
+class Home extends React.Component{
+	render(){
+		return(
+			<div style={divStyle} >
+				<AttentionGrabber />
+				<footer>Sharing styles across multiple components!</footer>
+			</div>
+		);
+	}
+}
+const h1Style = {
+	color: styles.color,
+	fontSize: styles.fontSize,
+	fontFamily: styles.fontFamily,
+	padding: styles.padding,
+	margin: 0
+}
+
+class AttentionGrabber extends React.Component{
+	render(){
+		return <h1 style={h1Style}>Welcome to the pit!</h1>
+	}
+}
+
+ReactDOM.render(<Home />, document.getElementById('app-reactstyling3'))
+
+//Stateless Functional Components and Props
+//Stateless functional components usually have props passed to them.
+
+//To access these props, give your stateless functional component a parameter. 
+// This parameter will automatically be equal to the component's props object.
+//It's customary to name this parameter props.
+//Not only are stateless functional components more concise, but they will subtly 
+// influence how you think about components in a positive way. They emphasize the f
+//  fact that components are basically functions! A component takes two optional inputs, 
+//   props and state, and outputs HTML and/or other components.
+
+//Normal Way of Displaying a prop using variables 
+/*  export class GuineaPigs extends React.Component {
+	render() {
+	  let src = this.props.src;
+	  return (
+		<div>
+		  <h1>Cute Guinea Pigs</h1>
+		  <img src={src} />
+		</div>
+	  );
+	}
+  }
+*/
+//Statless functional component way to display a prop using a variable
+export const GuineaPigs = (props) => {
+	let src = props.src;
+	return (
+		<div>
+			<h1>Cute Guinea Pigs</h1>
+			<img src={src} />
+		</div>
+	)
+}
+
+
+
+/// Codeacademy are seperating their code across a bunch of different files now so it's harder
+//   to replicate them here.
+//propTypes
+// proptypes are useful for validation and documenation
+
+
+
+
 registerServiceWorker();

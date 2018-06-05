@@ -41,3 +41,60 @@ Tutorial Topics Covered
     Naming event handlers and event handler attributes according to convention 
     this.props.children
     getDefaultProps
+
+05/06/2018
+  this.state
+    Setting Initial State
+    Access a components state
+    Update State with this.setstate
+    Call this.setstate from another function
+    this.setstate Automatically calls render
+    Components Interacting recap
+      Learned how to import and export one file from another
+      Learned about props and state
+      Learned about JSX
+  
+  Learn ReactJS: Part 2
+    Stateless Components from Stateful Components
+    Build a stateful component class
+    Build a stateless component class
+    Pass a components class
+    Don't update props
+
+    Child components update their parents state
+      Define an event handler
+      Pass the event handler
+      Receive the event handler
+      Automatic binding
+    Child Components Update their siblings props
+      One sibling to display another
+      Pass the right props to the right sibling
+      Display information in a sibling component
+      Stateless components inherit from stateful components
+      Recap
+        A stateful component class defines a function that calls this.setState
+        The stateful component passes that function down to a stateless component
+        That stateless component class defines a function that calls the passed down function
+        and that can take an event object as an arguement
+        The stateless component class uses this new function as an event handler
+        When an even is detected, the parents state updates(A user selects a new item)
+        The stateful component class passes down its state, distinct from the ability to
+        change its state, to a different stateless component
+        That stateless component class receives the state and displays it.
+        An instance of the stateful component class is rendered. One stateless child
+        component displays the state, and a different stateless child component 
+        displays a way to change this.
+    
+    Style
+     Advanced React Techniques
+     Inline Styles
+     Make a style object a variable
+     Style name syntax
+     Style Value Syntax
+     Share styles across multiple components
+
+    Seperating Container Components from Presentational Compontents
+    Statless Functional Components
+    Statless Functional Components and Props
+  
+    PropTypes
