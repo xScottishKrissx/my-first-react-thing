@@ -98,3 +98,31 @@ Tutorial Topics Covered
     Statless Functional Components and Props
   
     PropTypes
+
+06/06/2018
+  Apply PropTypes
+  Add Properties to PropTypes
+  PropTypes in Statless Functional Components
+
+  React Forms
+  Input onChange
+  Write an Input Event Handler
+  Set the Input initial state
+  Update an input value
+  Controlled vs Uncontrolled
+  React forms recap
+    Inline styles
+    Separating container and presentational components
+    Stateless functional components
+    Proptypes
+    Forms
+
+  Lifecycle Methods
+  What's a Lifecycle Method
+  Mounting Lifecycle Methods
+  componentWillMount
+  render
+  componentDidMount
+
+  Updating / Unmounting Lifecycle Methods
+  Updating Lifecycle Methods

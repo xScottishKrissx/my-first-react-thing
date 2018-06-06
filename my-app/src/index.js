@@ -750,8 +750,306 @@ export const GuineaPigs = (props) => {
 //   to replicate them here.
 //propTypes
 // proptypes are useful for validation and documenation
+// The first step to making a propType is to search for a property named propTypes 
+// on the instructions object. If there isn't one, make one! You will have to declare 
+// it after the close of your component declaration, since this it will be a static property.
+// Notice that the value of propTypes is an object, not a function!
+// The second step is to add a property to the propTypes object. For each prop that your 
+// component class expects to receive, there can be one property on your propTypes object.
+
+// The value of each property in propTypes should fit this pattern:
+//  ---  React.PropTypes.expected-data-type-goes-here
+
+class BestSeller extends React.Component{
+  render(){
+    return (
+      <div>
+        <p>Prop Types, Applying PropTypes</p>
+        <li>
+          Title:  <span>{this.props.title}</span><br/>
+          Author: <span>{this.props.author}</span><br/>
+          Weeks:  <span>{this.props.weeks}</span><br/>
+          </li>
+      </div>
+    );
+  }
+}
+/*
+This isn't working for some reason, it might need to have the two classes on seperate files
+BestSeller.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  author: React.PropTypes.string.isRequired,
+  weeks: React.PropTypes.number.isRequired
+}
+*/
+
+
+class BookList extends React.Component{
+  render(){
+    return(
+      <div>
+        <h1>Best Sellers</h1>
+        <div>
+          <ol>
+            <BestSeller 
+              title="Glory and War Stuff for Dads" 
+              author="Sir Eldrich Van Hoorsgaard" 
+              weeks={10} />
+            <BestSeller 
+              title="The Crime Criminals!" 
+              author="Brenda Sqrentun" 
+              weeks={2} />
+            <BestSeller
+              title="Subprime Lending For Punk Rockers" 
+              author="Malcolm McLaren" 
+              weeks={600} />
+          </ol>
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<BookList />, document.getElementById('app-proptypes'));
+
+// propTypes as stateless functional component
+/* Usual way
+
+class Example extends React.Component{
+}
+Example.propType = {};
+*/
+
+/* Stateless Functional Component Way
+const Example = (props) => {
+  return <h1>{props.message}</h1>
+};
+Example.propTypes = {
+  message: React.PropTypes.string.isRequired
+};
+*/
+
+
+//React Forms
+// Input on change
+
+class Input extends React.Component{
+  constructor(props){
+    super(props);
+    //Wrong
+    //this.setState({userInput:''});
+    //Also Wrong..
+    //this.setState = {userInput: ''};
+
+    //Right
+    this.state = {userInput: ''};
+
+    this.handleUserInput = this.handleUserInput.bind(this);
+  }
+
+  handleUserInput(e){
+    //Wrong
+    // this.setState = (e).target.value;
+
+    //Right
+    this.setState({userInput: e.target.value});
+  }
+
+  render(){
+    return(
+      <div>
+        <input value={this.state.userInput} onChange={this.handleUserInput} type="text" />
+      <h1>Type Something: {this.state.userInput}</h1>
+    </div>
+    );
+  }
+}
+ReactDOM.render(<Input />, document.getElementById('app-forms1'));
+
+//Lifecycle methods
+// -methods that get called at a certain moment in a components life
+// -can be called right before a component renders for the 1st time
+// - can be called after a oomponent renders EXCEPT for the 1st time
+// - There are 3 types of lifecycle methods
+//   -- mounting, updating and unmounting
+// - There are 3 mounting lifecycle methods
+//    - componentWillMount, render, componentDidMount
+//     - When a component mounts it auto calls these 3 in order
+
+class Flashy extends React.Component{
+  componentWillMount(){
+    //alert('Youre about see some black text...')
+    console.log("You're about see some black text...");
+  }
+  componentDidMount(){
+    //alert("The text should've appeared by now...");
+    console.log('The text should have appeared by now...')
+  }
+  render(){
+    //alert("Message is rendering...");
+    console.log("Message is rendering...");
+
+    return(
+      <div>
+      <p style={{color:this.props.color}}>Example of componentWillMount</p>
+      <p style={{color:this.props.color}}>Example of componentDidMount</p>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Flashy color='black' />, document.getElementById('app-componentwillmount'));
+setTimeout( () => {
+  ReactDOM.render(<Flashy color='white' />, document.getElementById('app-componentwillmount'));
+}, 2000);
+
+
+
+// componentDidMount
+// - when a component renders for the first time, this gets called after the html from render
+// - is used a lot
+// - if your app uses ajax to fetch data this is the place to make that call
+// - a good place in general to connect to external api, application, frameworks etc
+// - a good place to set timers using setTimeout or setInterval
+
+// Updating Lifecycle Methods
+// - the first time a component instance renders it does'nt update.
+// - a component updates every time it renders starting with the 2nd render.
+// - There are 5 updating lifecycle methods-:
+//   - componentWillReceivePros
+//   - shouldComponentUpdate
+//   - componentWillUpdate
+//   - render
+//   - componentDidUpdate
+//  - When a component instance updates it auto calls these 5 in order. 
+
+// componentWIllReceiveProps
+// - when a component updates, this gets called before rendering begins.
+// - only gets called if component receives props.
+// - comparing incoming props to current props/state and rendering based on that comparison
+
+
+/* will get called here...
+  ReactDOM.render(</Example props="example" /> , document.getElementById('example');
+*/
+
+/* will NOT get called here...
+  ReactDOM.render(</Example/> , document.getElementById('example');
+*/
+
+// Theres a whole numbers game after this point that I have no interest in copying but i might
+// copy and paste later as a good starting reference for this sort of project.
+
+
+// shouldComponentUpdate
+// - when component updates, this gets called after willReceiiveProps but before rendering starts
+// - best way to use this is with true/flase statements
+
+// componentWillUpdate
+// - called between shouldComponentUpdate and render
+// - can't call this.set state from its body.
+// - Used to interact with things outside react.
+// - If you need check window size, interact with api, this is a good place to do it
+// - Example usage - if x then change background colour of page
+// - document.body has nothing to do with react so this is a good usage for componentWillUpdate
+
+// componentDidUpdate
+// - called after any rendered html has loaded
+// - used for interacting with things outside react like api
+// - similiar to componentWillUpdate EXCEPT its called after render instead of before.
+
+// componentWillUnmount
+// - occurs when the component is removed from the DOM.
+// - happens when the DOM is rendered, user leaves the site or closes the browser.
+// - the ONLY unmounting lifecycle method
+// - gets called right before a component is removed from the DOM
+// - if a component initiates any method that requires clean up, this is where it should be.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 registerServiceWorker();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

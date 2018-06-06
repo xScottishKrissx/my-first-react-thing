@@ -157,6 +157,11 @@ class App extends Component {
           <div id="app-reactstyling2" className="row"></div>
           <div id="app-reactstyling3" className="row"></div>
 
+          <div id="app-proptypes" className="row"></div>
+
+          <div id="app-forms1" className="row"></div>
+
+          <div id="app-componentwillmount" className="row"></div>
         </div>
       </div>
     );
